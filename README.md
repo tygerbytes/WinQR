@@ -2,7 +2,7 @@
 
 .NET Core app for generating and display QR codes.
 
-![QR Buddy screenshot](https://github.com/tygerbytes/winqr/raw/master/src/screenshot.png "QR Buddy Screenshot")
+![QR Buddy screenshot](https://github.com/tygerbytes/WinQR/blob/master/screenshot.png "QR Buddy Screenshot")
 
 ## Using
 
