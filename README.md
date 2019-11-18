@@ -1,0 +1,20 @@
+# WinQR
+
+.NET Core app for generating and display QR codes.
+
+![QR Buddy screenshot](https://github.com/tygerbytes/winqr/raw/master/src/screenshot.png "QR Buddy Screenshot")
+
+## Using
+
+* Text typed into the form's text box will be converted to a QR code.
+* Click the image and it will be copied to the clipboard
+
+## Building
+
+* Clone it
+* Build it in VS 2019+
+* Grab binaries from `./bin/Release/netcoreapp3.0`
+
+## Ack
+
+Makes use of [QrCodeGenerator](https://github.com/manuelbl/QrCodeGenerator)
