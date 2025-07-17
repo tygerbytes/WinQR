@@ -1,5 +1,8 @@
 ﻿using Net.Codecrete.QrCodeGenerator;
 using System;
+using System.Drawing;
+using System.IO;
+using System.Threading.Tasks;
 using System.Windows.Forms;
 
 namespace GenQR
@@ -31,16 +34,25 @@ namespace GenQR
         private void RegenerateQr()
         {
             var qr = QrCode.EncodeText(SourceText.Text, QrCode.Ecc.Medium);
-            var bitmap = qr.ToBitmap(scale: 10, border: 1);
+            //var bitmap = qr.ToBitmap(scale: 10, border: 1);
+            var bitmap = qr.ToBmpBitmap(scale: 10, border: 1);
 
-            //bitmap.Save("qr-code.png", ImageFormat.Png);
-            QrPicture.Image = bitmap;
+            using var ms = new MemoryStream(bitmap);
+            using var tempImage = Image.FromStream(ms);
+            QrPicture.Image = new Bitmap(tempImage); // Clone the image
         }
 
         private void QrPicture_Click(object sender, EventArgs e)
         {
-            Clipboard.SetImage(QrPicture.Image);
-            InfoLabel.Text = "QR image copied to clipboard.";
+            if (QrPicture.Image != null)
+            {
+                Clipboard.SetImage(QrPicture.Image);
+                InfoLabel.Text = "QR image copied to clipboard.";
+            }
+            else
+            {
+                InfoLabel.Text = "No QR image to copy.";
+            }
         }
 
         private void QrBuddy_Load(object sender, EventArgs e)
@@ -51,6 +63,23 @@ namespace GenQR
                 SourceText.Text = clipText;
                 InfoLabel.Text = "QR generated from clipboard.";
                 RegenerateQr();
+            }
+        }
+
+        private void SaveAs_Click(object sender, EventArgs e)
+        {
+            // Open a SaveFileDialog to save the QR code image
+            using var saveFileDialog = new SaveFileDialog
+            {
+                Filter = "PNG Image|*.png",
+                Title = "Save QR Code Image"
+            };
+
+            if (saveFileDialog.ShowDialog() == DialogResult.OK)
+            {
+                using var bitmap = QrPicture.Image;
+                bitmap.Save(saveFileDialog.FileName, System.Drawing.Imaging.ImageFormat.Png);
+                InfoLabel.Text = "QR code saved successfully.";
             }
         }
     }
