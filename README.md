@@ -13,7 +13,7 @@
 
 * Clone it
 * Build it in VS 2019+
-* Grab binaries from `./bin/Release/netcoreapp3.0`
+* Grab binaries from `./bin/Release/net9.0-windows`
 
 ## Ack
 
